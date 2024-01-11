@@ -1,9 +1,9 @@
 import React from 'react'
-
+import "./update.css";
 const Updateuser = () => {
   return (
-    <div>
-      
+    <div >
+    <h1>Hello update</h1>
     </div>
   )
 }
