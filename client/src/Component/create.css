@@ -1,0 +1,21 @@
+.form-container {
+    width: 26vw;
+    position: absolute;
+    top: 28%;
+    left: 39%;
+    border: 1px solid;
+    height: 45vh;
+    padding: 57px;
+}
+
+.form-container .frm {
+    margin-bottom: 16px;
+}
+
+.btn-btn-success {
+    margin: 7px 61px;
+    background: greenyellow;
+    border: none;
+    width: 94px;
+    border-radius: 20px;
+}
