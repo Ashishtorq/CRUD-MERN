@@ -10,6 +10,8 @@ function App() {
       <BrowserRouter>
         <Routes>
         <Route path="/" element={}></Route>
+        <Route path="/create" element={}></Route>
+        <Route path="/update" element={}></Route>
         </Routes>
       </BrowserRouter>
     </Fragment>
