@@ -4,11 +4,10 @@ const cors = require("cors");
 const PORT = 8000;
 const Database = require("./models/user");
 
-
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+// db connection
 mongoose
   .connect("mongodb://127.0.0.1:27017/CRUD")
   .then(() => {
@@ -17,13 +16,19 @@ mongoose
   .catch((e) => {
     console.log(e);
   });
-
-app.post("/createuser", async (req, res) => {
+// create api
+app.post("/createuser", (req, res) => {
   Database.create(req.body)
     .then((users) => res.json(users))
     .catch((e) => res.json(e));
 });
-
+// get data
+app.get("/", (req, res) => {
+  Database.find({})
+    .then((result) => res.json(result))
+    .catch((e) => res.json(e));
+});
+// server
 app.listen(PORT, () => {
   console.log(`Server is running on Port ${PORT}`);
 });
