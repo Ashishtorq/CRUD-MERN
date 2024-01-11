@@ -5,11 +5,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 const User = () => {
   const [user, setUser] = useState([]);
-  useEffect(()=>{
-    axios.get("http://localhost:8000")
-    .then(result => setUser(result.data))
-    .catch(e => console.log(e));
-  },[])
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000")
+      .then((result) => setUser(result.data))
+      .catch((e) => console.log(e));
+  }, []);
+
+  const deleteHandler = (id) => {
+    axios
+      .delete("http://localhost:8000/delete/" + id)
+      .then((result) => {
+        console.log(result);
+        alert("Data Deletd");
+      })
+      .catch((e) => console.log(e));
+  };
   return (
     <div>
       <h1>Hello Users</h1>
@@ -33,10 +44,12 @@ const User = () => {
                 <td>{users.Email}</td>
                 <td>{users.Age}</td>
                 <td>
-                  <Link to="/update" className="create-link">
+                  <Link to={`/update ${users._id}`} className="create-link">
                     Update
                   </Link>
-                  <button>Delete</button>
+                  <button onClick={(e) => deleteHandler(users._id)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             );

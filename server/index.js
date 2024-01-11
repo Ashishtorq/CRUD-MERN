@@ -28,6 +28,14 @@ app.get("/", (req, res) => {
     .then((result) => res.json(result))
     .catch((e) => res.json(e));
 });
+//delete
+app.delete('/delete/:id', (req,res)=>{
+  const ID = req.params.id;
+Database.findByIdAndDelete({_id:ID})
+.then(result => res.json(result))
+.catch(e => res.json(e));
+
+})
 // server
 app.listen(PORT, () => {
   console.log(`Server is running on Port ${PORT}`);
