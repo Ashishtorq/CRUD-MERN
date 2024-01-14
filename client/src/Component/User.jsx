@@ -12,15 +12,17 @@ const User = () => {
       .catch((e) => console.log(e));
   }, []);
 
+  // delete 
   const deleteHandler = (id) => {
     axios
       .delete("http://localhost:8000/delete/" + id)
       .then((result) => {
         console.log(result);
-        alert("Data Deletd");
+        alert("Data Deleted");
       })
       .catch((e) => console.log(e));
   };
+
   return (
     <div>
       <h1>Hello Users</h1>
