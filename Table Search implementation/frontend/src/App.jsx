@@ -3,21 +3,50 @@ import "./App.css";
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [sortDirection, setSortDirection] = useState("asc");
+
   const userInfo = async () => {
     const userData = await fetch("http://localhost:3000/user");
     const Data = await userData.json();
     console.log(Data);
     setUsers(Data);
   };
+
   useEffect(() => {
     userInfo();
-  });
+  }, []);
+
+  let debounceTimeout;
+
+  const handleSearchChange = (event) => {
+    const searchValue = event.target.value;
+
+    clearTimeout(debounceTimeout);
+
+    debounceTimeout = setTimeout(() => {
+      setSearch(searchValue);
+    }, 1000); // delay in milliseconds
+  };
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(search.toLowerCase()) ||
+      user.address.toLowerCase().includes(search.toLowerCase()) ||
+      user.email.toLowerCase().includes(search.toLowerCase()) ||
+      user.id.toString().includes(search.toLowerCase()) ||
+      user.username.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Fragment>
-    <div className="search-bar">
-    <input type="text" placeholder="Enter Name" />
-    <button>Search</button>
-    </div>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search by Name, Email, Id, Username"
+          onChange={handleSearchChange}
+        />
+      </div>
       <table className="tab-container">
         <thead className="t-head">
           <tr className="t-row">
@@ -29,24 +58,21 @@ function App() {
             <th className="t-head">Email</th>
             <th className="t-head">Company</th>
             <th className="t-head">Website</th>
-           
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => {
-            return (
-              <tr className="t-row" key={user.id}>
-                <td className="t-data">{user.name}</td>
-                <td className="t-data">{user.id}</td>
-                <td className="t-data">{user.username}</td>
-                <td className="t-data">{user.address}</td>
-                <td className="t-data">{user.phone}</td>
-                <td className="t-data">{user.email}</td>
-                <td className="t-data">{user.company}</td>
-                <td className="t-data">{user.website}</td>
-              </tr>
-            );
-          })}
+          {filteredUsers.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.id}</td>
+              <td>{user.username}</td>
+              <td>{user.address}</td>
+              <td>{user.phone}</td>
+              <td>{user.email}</td>
+              <td>{user.company}</td>
+              <td>{user.website}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Fragment>
