@@ -19,7 +19,7 @@ app.get("/user/v1", async(req,res)=>{
         userInfo.name = user.name
         userInfo.username = user.username
         userInfo.email = user.email
-        userInfo.address = user.address
+        userInfo.address = `${user.address.city}, ${user.address.street}`
         userInfo.phone = user.phone
 
         response.push(userInfo)

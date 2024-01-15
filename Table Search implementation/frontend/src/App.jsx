@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
+
 
   const userInfo = async () => {
     const userData = await fetch("http://localhost:3000/user");
