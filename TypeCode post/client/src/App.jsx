@@ -3,27 +3,23 @@ import "./App.css";
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState("");
+
   const apiUrl = "http://localhost:9000/user";
   const apiInfo = async () => {
     const userInfo = await fetch(apiUrl);
     const userData = await userInfo.json();
-    console.log(userData);
+    // console.log(userData);
     setUsers(userData);
   };
   useEffect(() => {
     apiInfo();
   });
-  const searchHandler = (event) => {
-    console.log(event.target.value);
-    setSearch(event.target.value);
+  const searchAPI = async (id) => {
+    const apiInfo = await fetch(`${apiUrl}/${id}`);
+    const userInfo = await apiInfo.json();
+    console.log(userInfo)
+    setUsers([userInfo]);
   };
-  const filterUser = users.filter(
-    (user) =>
-      user.id.toString().includes(search.toLowerCase()) ||
-      user.userid.toString().includes(search.toLowerCase())
-  );
-
   return (
     <Fragment>
       <h1>Table</h1>
@@ -31,24 +27,30 @@ function App() {
         <input
           type="text"
           placeholder="Search By UserId and ID"
-          onChange={searchHandler}
+          className="input-box"
+          onKeyDown={(e) => {
+            console.log(e.target.value)
+            if (e.key === "Enter") {
+              searchAPI(e.target.value);
+            }
+          }}
         />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>UserId</th>
-            <th>Tittle</th>
-            <th>Body</th>
+      <table className="table-container">
+        <thead className="tabel-head">
+          <tr className="table-row">
+            <th className="table-head">ID</th>
+            <th className="table-head">UserId</th>
+            <th className="table-head">Tittle</th>
+            <th className="table-head">Body</th>
           </tr>
         </thead>
         <tbody>
-          {filterUser.map((user) => {
+          {users.map((user) => {
             return (
-              <tr key={user.id}>
+              <tr>
                 <td>{user.id}</td>
-                <td>{user.userid}</td>
+                <td>{user.userId}</td>
                 <td>{user.title}</td>
                 <td>{user.body}</td>
               </tr>
