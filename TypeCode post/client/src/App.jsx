@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Fragment, useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const apiUrl = "http://localhost:9000/user";
+  const apiInfo = async () => {
+    const userInfo = await fetch(apiUrl);
+    const userData = await userInfo.json();
+    console.log(userData);
+    setUsers(userData);
+  };
+  useEffect(() => {
+    apiInfo();
+  });
+  const searchHandler = (event) => {
+    console.log(event.target.value);
+    setSearch(event.target.value);
+  };
+  const filterUser = users.filter(
+    (user) =>
+      user.id.toString().includes(search.toLowerCase()) ||
+      user.userid.toString().includes(search.toLowerCase())
+  );
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Fragment>
+      <h1>Table</h1>
+      <div id="search-box">
+        <input
+          type="text"
+          placeholder="Search By UserId and ID"
+          onChange={searchHandler}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>UserId</th>
+            <th>Tittle</th>
+            <th>Body</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filterUser.map((user) => {
+            return (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.userid}</td>
+                <td>{user.title}</td>
+                <td>{user.body}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </Fragment>
+  );
 }
 
-export default App
+export default App;

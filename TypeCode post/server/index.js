@@ -2,13 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
-const PORT = 3000;
+const PORT = 9000
 app.use(express.json());
 app.use(cors());
 
 app.get("/user", async (req, res) => {
   const userInfo = await axios("https://jsonplaceholder.typicode.com/posts");
-  const userData = userInfo.data;
+  const userData = userInfo.data
 
   let response = [];
 
@@ -21,7 +21,7 @@ app.get("/user", async (req, res) => {
 
     response.push(userPostData)
   });
-  res.send(response).status(200)
+  res.send(response)
 });
 
 app.listen(PORT, () => {
