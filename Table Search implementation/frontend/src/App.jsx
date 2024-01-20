@@ -26,7 +26,7 @@ function App() {
 
     debounceTimeout = setTimeout(() => {
       setSearch(searchValue);
-    }, 5000); // delay in milliseconds
+    }, 500); // delay in milliseconds
   };
 
   const filteredUsers = users.filter(

@@ -1,5 +1,5 @@
-MERN Stack Interview Task
-Backend:
+# MERN Stack Interview Task
+## Backend:
 1. Initialize a Node.js (Express.js) Application:
 Begin by creating a new Node.js application using Express.js. This application will serve
 as the backend for our project, handling data requests and responses.
@@ -15,7 +15,7 @@ field, and the result should be sent as a response.
 Extend the API to support search functionality by user name. If a search query is
 provided in the request parameters (e.g., /v1/users?searchText=John), the API should
 filter the results based on the user's name and return matching users.
-Frontend (React.js):
+## Frontend (React.js):
 1. Set Up React App:
 Create a new React.js application using Create React App. This will be the frontend part
 of our MERN stack.
