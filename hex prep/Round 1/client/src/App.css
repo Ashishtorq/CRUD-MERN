@@ -16,6 +16,7 @@ table {
   top: 11rem;
   left: 24rem;
   cursor: pointer;
+  box-shadow: 10px 10px 10px 10px #00000069;
 }
 
 th {
@@ -30,5 +31,21 @@ td {
 }
 
 tr:hover {
+  background-color: #87CEEB;
+}
+
+tbody {
   background-color: whitesmoke;
+}
+
+input {
+  position: absolute;
+  width: 27rem;
+  height: 3rem;
+  border-radius: 10px;
+  text-align: center;
+  border: none;
+  left: 44%;
+  font-size: large;
+  font-weight: 600;
 }

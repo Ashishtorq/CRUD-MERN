@@ -25,7 +25,7 @@ app.get("/user", async (req, res) => {
 });
 
 app.get("/user/:id", async (req, res) => {
-  const userInfo = await axios("https://jsonplaceholder.typicode.com/posts");
+  const userInfo = await axios("http://localhost:9000/user");
   const userData = userInfo.data;
   const id = parseInt(req.params.id);
 
