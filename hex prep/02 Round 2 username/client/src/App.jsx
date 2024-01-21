@@ -3,59 +3,55 @@ import "./App.css";
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState("")
+  const [search, setSearch] =  useState("")
+
   const callApi = async () => {
-    const userInfo = await fetch("http://localhost:4000/user");
+    const userInfo = await fetch("http://localhost:3000/user");
     const userData = await userInfo.json();
     console.log(userData);
     setUsers(userData);
-  };
-  useEffect(() => {
-    callApi();
-  }, []);
-  const callById = useCallback(async(username)=>{
-    const userInfo = await fetch(`http://localhost:4000/username/${username}`);
+  }; 
+
+  const searchAPI = useCallback(async (username) => {
+    const userInfo = await fetch(`http://localhost:3000/user/${username}`);
     const userData = await userInfo.json();
-    console.log(userData)
-    setUsers([userData])
-  },[])
-  useEffect(()=>{
-    const debounce = setTimeout(()=>{
-      if(search){
-        callById(search)
-      }else{
-        callApi()
+    console.log(userData);
+    setUsers([userData]);
+  }, []);
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      if (search) {
+        searchAPI(search);
+      } else {
+        callApi();
       }
-    },1000)
-   return ()=> clearTimeout(debounce)
-  },[search, callApi, callById])
+    }, 1000);
+    return () => clearTimeout(debounce);
+  }, [search, searchAPI, callApi]);
+
   return (
     <Fragment>
-      
       <div className="search-box">
-      <input type="text" placeholder="Search By Id" 
-      onChange={(e)=>{
-        setSearch(e.target.value)
-      }}
-      />
+      <input type="text" placeholder="Search By Username" onChange={(e)=> setSearch(e.target.value) } />
       </div>
       <table>
         <thead>
           <tr>
-            <td>Id</td>
-            <td>Name</td>
-            <td>Username</td>
-            <td>Email</td>
-            <td>Address</td>
-            <td>Phone</td>
-            <td>Website</td>
-            <td>Company</td>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Website</th>
+            <th>Company</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => {
             return (
-              <tr>
+              <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.username}</td>

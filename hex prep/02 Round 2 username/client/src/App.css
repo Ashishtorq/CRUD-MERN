@@ -1,0 +1,53 @@
+body {
+  background: linear-gradient(to left, #69d2c26e, rgba(132, 222, 186, 0.687));
+  position: relative;
+}
+
+table {
+  box-shadow: 10px 10px 10px 10px #00000073;
+  border: 2px solid black;
+  border-collapse: collapse;
+  width: 66rem;
+  position: absolute;
+  top: 273%;
+  left: 14%;
+  cursor: pointer;
+  text-align: center;
+}
+
+td {
+  border: 1px solid black;
+}
+
+td:hover {
+  background-color: white;
+}
+
+tr:nth-child(even) {
+  background-color: aquamarine;
+}
+
+th {
+  border: 1px solid black;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+thead {
+  height: 3rem;
+  background-color: aquamarine;
+}
+
+.search-box {
+  position: relative;
+}
+
+input {
+  width: 21rem;
+  height: 2rem;
+  text-align: center;
+  padding: 4px;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 10px 10px 10px 10px #0000007a;
+}
