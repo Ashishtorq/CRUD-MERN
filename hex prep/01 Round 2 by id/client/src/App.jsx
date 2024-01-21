@@ -31,7 +31,7 @@ function App() {
   },[search, callApi, callById])
   return (
     <Fragment>
-      <h1>Table</h1>
+      
       <div className="search-box">
       <input type="text" placeholder="Search By Id" 
       onChange={(e)=>{

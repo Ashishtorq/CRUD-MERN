@@ -23,27 +23,31 @@ app.get("/user", async (req, res) => {
     userObj.address = `${user.address.city}, ${user.address.street}`;
     userObj.company = `${user.company.name},${user.company.bs} `;
 
-    respose.push(userObj)
+    respose.push(userObj);
   });
-  res.send(respose)
+  res.send(respose);
 });
 
-app.get("/user/:id",async(req,res)=>{
+app.get("/user/:id", async (req, res) => {
   const userInfo = await axios("http://localhost:4000/user");
   const userData = userInfo.data;
-  const userid = parseInt(req.params.id)
-  const userFeild = userData.find(user => user.id === userid)
-  if(userFeild){
-    res.send(userFeild).status(201)
-  }else{
-    res.send({message:"NO Data "}).status(404)
+  const userid = parseInt(req.params.id);
+  const userFeild = userData.find((user) => user.id === userid);
+  if (userFeild) {
+    res.send(userFeild).status(201);
+  } else {
+    res.send({ message: "NO Data " }).status(404);
   }
-})
-app.get("/user/username", async (req, res) => {
+}); 
+app.get("/username/:username", async (req, res) => {
   const userInfo = await axios("http://localhost:4000/user");
   const userData = userInfo.data;
-  const username = req.query.username;
-  const userField = userData.find((user) => user.username === username);
+  const username = req.params.username;
+  console.log(username);
+  const userField = userData.find(
+    (user) => user.username.toLowerCase() === username.toLowerCase()
+  );
+  console.log(userField);
   if (userField) {
     res.status(200).send(userField);
   } else {
