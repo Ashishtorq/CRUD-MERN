@@ -12,27 +12,30 @@ function App() {
     setUsers(userData);
   };
 
+  
+  
   const callApiById = useCallback(async (id) => {
     const userInfo = await fetch(`http://localhost:3000/user/${id}`);
     const userData = await userInfo.json();
     console.log(userData);
-    setUsers([userData]); // Set the single user data inside an array
+    setUsers([userData]);
   }, []);
 
-  useEffect(() => {
+  
+    useEffect(() => {
     callApi();
   }, []);
 
+  
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const debounce = setTimeout(() => {
       if (searchId) {
         callApiById(searchId);
       } else {
         callApi();
       }
-    }, 1000); // delay in milliseconds
-
-    return () => clearTimeout(timer); // this will clear the timer when the component unmounts or the searchId changes
+    }, 1000);
+    return () => clearTimeout(debounce);
   }, [searchId, callApi, callApiById]);
 
   return (
@@ -42,7 +45,9 @@ function App() {
         <input
           type="text"
           placeholder="Search By id"
-          onChange={(e) => setSearchId(e.target.value)}
+          onChange={(e) => {
+            setSearchId(e.target.value);
+          }}
         />
       </div>
 
@@ -61,7 +66,7 @@ function App() {
         <tbody>
           {users.map((user) => {
             return (
-              <tr>
+              <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
