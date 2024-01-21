@@ -34,7 +34,7 @@ function App() {
       } else {
         callApi();
       }
-    }, 1000);
+    }, 500);
     return () => clearTimeout(debounce);
   }, [searchId, callApi, callApiById]);
 

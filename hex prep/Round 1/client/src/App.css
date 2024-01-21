@@ -31,7 +31,11 @@ td {
 }
 
 tr:hover {
-  background-color: #87CEEB;
+  /* background-color: #87CEEB;
+  color: white; */
+}
+tr:nth-child(even){
+  background-color:#87CEEB ;
 }
 
 tbody {
