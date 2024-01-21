@@ -36,10 +36,20 @@ app.get("/user/:id",async(req,res)=>{
   if(userFeild){
     res.send(userFeild).status(201)
   }else{
-    res.send({message:"NO Data Found"}).status(404)
+    res.send({message:"NO Data "}).status(404)
   }
 })
-
+app.get("/user/username", async (req, res) => {
+  const userInfo = await axios("http://localhost:4000/user");
+  const userData = userInfo.data;
+  const username = req.query.username;
+  const userField = userData.find((user) => user.username === username);
+  if (userField) {
+    res.status(200).send(userField);
+  } else {
+    res.status(404).send({ message: "No user found with the given username" });
+  }
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

@@ -26,7 +26,7 @@ function App() {
       }else{
         callApi()
       }
-    },1000)
+    },500)
    return ()=> clearTimeout(debounce)
   },[search, callApi, callById])
   return (
