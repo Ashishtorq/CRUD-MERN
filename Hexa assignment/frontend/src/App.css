@@ -4,8 +4,6 @@ table {
   text-align: center;
   height: 36rem;
   width: -10rem;
-  position: absolute;
-  left: 7%;
   box-shadow: 10px 10px 10px 10px #00000082;
   cursor: pointer;
 }
@@ -29,3 +27,4 @@ th {
   background-color: #2B91DF;
   color: white;
 }
+

@@ -1,17 +1,19 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
   const [users, setUsers] = useState([]);
+
   const callApi = async () => {
     const userInfo = await fetch("http://localhost:3000/user");
     const userData = await userInfo.json();
     console.log(userData);
     setUsers(userData);
   };
+
   useEffect(() => {
     callApi();
-  });
+  }, []);
   return (
     <Fragment>
       <table>
