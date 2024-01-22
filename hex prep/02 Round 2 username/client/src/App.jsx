@@ -13,7 +13,7 @@ function App() {
   }; 
 
   const searchAPI = useCallback(async (username) => {
-    const userInfo = await fetch(`http://localhost:3000/user/${username}`);
+    const userInfo = await fetch(`http://localhost:3000/username/${username}`);
     const userData = await userInfo.json();
     console.log(userData);
     setUsers([userData]);

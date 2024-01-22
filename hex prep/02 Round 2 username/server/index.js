@@ -3,6 +3,8 @@ const axios = require("axios");
 const cors = require("cors");
 const app = express();
 const PORT = 3000;
+const jwt = require("jsonwebtoken")
+const jwtKey = "hexa-decimal"
 
 app.use(cors());
 app.use(express.json());
@@ -26,22 +28,42 @@ app.get("/user", async (req, res) => {
 
     response.push(userObj);
   });
-  res.send(response);
+  jwt.sign({ response }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+    res.send({ response, auth: token }).status(200);
+  });
 });
 
-app.get("/user/:username", async (req, res) => {
+app.get("/username/:username", async (req, res) => {
   const userInfo = await axios("http://localhost:3000/user");
   const userData = userInfo.data;
   const userName = req.params.username;
 
-  const userFeild = userData.find((user) => user.username.toLowerCase() === userName.toLowerCase());
+  const userFeild = userData.find(
+    (user) => user.username.toLowerCase() === userName.toLowerCase()
+  );
   if (userFeild) {
-    res.send(userFeild).status(200);
+    jwt.sign({userFeild}, jwtKey,{expiresIn:"2h"},(err, token)=>{
+    res.send({userFeild,auth:token}).status(200);
+    })
+    
   } else {
     res.send({ message: "No Data Found" }).status(404);
   }
 });
-
+app.get("/userid/:id", async (req, res) => {
+  const userInfo = await axios("http://localhost:3000/user");
+  const userData = userInfo.data;
+  const userid = parseInt(req.params.id);
+  const userFeild = userData.find(user => user.id === userid);
+  console.log(userFeild)
+  if (userFeild) {
+     jwt.sign({ userFeild }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+       res.send({ userFeild, auth: token }).status(200);
+     });
+  } else {
+    res.send({ message: "No Data" });
+  }
+});
 app.listen(PORT, () => {
   console.log(`Server is running at Port ${PORT}`);
 });
