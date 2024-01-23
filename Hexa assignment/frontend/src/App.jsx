@@ -1,19 +1,25 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
-import "./App.css";
+import React, { Fragment, useEffect, useState } from "react";
+import Todo from "./Components/Todo";
+import './App.css'
 
-function App() {
+const App = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const callApi = async () => {
     const userInfo = await fetch("http://localhost:3000/user");
     const userData = await userInfo.json();
-    console.log(userData);
     setUsers(userData);
   };
 
   useEffect(() => {
     callApi();
   }, []);
+
+  const RowClick = (userId) => {
+    setSelectedUserId(userId);
+  };
+
   return (
     <Fragment>
       <table>
@@ -30,24 +36,23 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => {
-            return (
-              <tr>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.address}</td>
-                <td>{user.phone}</td>
-                <td>{user.website}</td>
-                <td>{user.company}</td>
-              </tr>
-            );
-          })}
+          {users.map((user) => (
+            <tr key={user.id} onClick={() => RowClick(user.id)}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
+              <td>{user.address}</td>
+              <td>{user.phone}</td>
+              <td>{user.website}</td>
+              <td>{user.company}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      {selectedUserId && <Todo userId={selectedUserId} />}
     </Fragment>
   );
-}
+};
 
 export default App;
