@@ -40,9 +40,15 @@ app.get("/userid/:userid", async (req, res) => {
     return res.status(404).send({ message: "User not found" });
   }
 
-  userObj.todo = userTodo.filter((todo) => todo.userId === userId);
+  const todos = userTodo.filter((todo) => todo.userId === userId);
 
-  res.send(userObj);
+  const result = {
+    id: userObj.id,
+    name: userObj.name,
+    todo: todos,
+  };
+
+  res.send(result);
 });
 app.listen(PORT, () => {
   console.log(`Server is running at Port ${PORT}`);
