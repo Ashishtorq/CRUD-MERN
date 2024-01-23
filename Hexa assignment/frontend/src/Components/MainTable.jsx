@@ -5,8 +5,7 @@ import "../App.css";
 
 const MainTable = () => {
   const [users, setUsers] = useState([]);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-
+ 
   const callApi = async () => {
     const userInfo = await fetch("http://localhost:3000/user");
     const userData = await userInfo.json();
@@ -17,9 +16,7 @@ const MainTable = () => {
     callApi();
   }, []);
 
-  const RowClick = (userId) => {
-    setSelectedUserId(userId);
-  };
+ 
 
   return (
     <Fragment>
@@ -38,7 +35,7 @@ const MainTable = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id} onClick={() => RowClick(user.id)}>
+            <tr key={user.id} >
               <td>
                 <Link to={`/${user.id}`}>{user.id}</Link>
               </td>
@@ -69,7 +66,7 @@ const MainTable = () => {
           ))}
         </tbody>
       </table>
-      {selectedUserId && <Todo userId={selectedUserId} />}
+   
     </Fragment>
   );
 };
