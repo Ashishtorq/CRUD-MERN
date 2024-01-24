@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
-import {Link} from 'react-router-dom'
-import Todo from "./Todo";
+import { Link } from "react-router-dom";
 import "../App.css";
 
 const MainTable = () => {
   const [users, setUsers] = useState([]);
- 
+
   const callApi = async () => {
     const userInfo = await fetch("http://localhost:3000/user");
     const userData = await userInfo.json();
@@ -16,10 +15,9 @@ const MainTable = () => {
     callApi();
   }, []);
 
- 
-
   return (
     <Fragment>
+    <header className="note"><p>Note-: Click on row to get the user tasks</p></header>
       <table>
         <thead>
           <tr>
@@ -35,7 +33,7 @@ const MainTable = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id} >
+            <tr key={user.id}>
               <td>
                 <Link to={`/${user.id}`}>{user.id}</Link>
               </td>
@@ -58,15 +56,12 @@ const MainTable = () => {
                 <Link to={`/${user.id}`}>{user.website}</Link>
               </td>
               <td>
-                <Link to={`/${user.id}`}>
-                {user.company}
-                </Link>
+                <Link to={`/${user.id}`}>{user.company}</Link>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-   
     </Fragment>
   );
 };

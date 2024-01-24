@@ -25,26 +25,26 @@ app.get("/user", async (req, res) => {
     userObj.company = `${user.company.name},${user.company.bs} `;
     response.push(userObj);
   });
-  res.send(response);
+  res.status(200).send(response);
 });
 
-app.get("/userid/:userid", async (req, res) => {
-  const userId = parseInt(req.params.userid);
+app.get("/userid/:id", async (req, res) => {
+  const userId = parseInt(req.params.id);
   const userInfo = await axios("http://localhost:3000/user");
   const userData = userInfo.data;
   const Todo = await axios("https://jsonplaceholder.typicode.com/todos");
   const userTodo = Todo.data;
 
-  let userObj = userData.find((user) => user.id === userId);
-  if (!userObj) {
-    return res.status(404).send({ message: "User not found" });
+  const user = userData.find((user) => user.id === userId);
+  if (!user) {
+    res.status(404).send({ message: "User not found" });
   }
 
   const todos = userTodo.filter((todo) => todo.userId === userId);
 
   const result = {
-    id: userObj.id,
-    name: userObj.name,
+    id: user.id,
+    name: user.name,
     todo: todos,
   };
 
